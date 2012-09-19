@@ -1,0 +1,147 @@
+map <C-N><C-N> :set invnumber<CR>
+set nobackup
+set backspace=indent,eol,start
+set ruler
+set ai
+set showcmd
+set incsearch
+set title
+set autoread
+
+set foldmethod=indent
+set nofoldenable
+
+set nomodeline
+
+syntax on
+set hlsearch
+
+set pastetoggle=<C-P>
+
+
+map Q gq
+map <C-K> :nohlsearch<CR>
+
+map! <C-E> <ESC>A
+
+" tabs
+map <C-P> :Project<CR>
+map <C-T> :tabnew<CR>
+map <S-RIGHT> <ESC>:tabn<CR>
+map <S-LEFT>  <ESC>:tabp<CR>
+
+
+" kolorki
+set background=dark
+
+hi clear
+if exists("syntax_on")
+	syntax reset
+endif
+
+hi Comment term=bold ctermfg=Brown
+
+hi Constant term=underline  ctermfg=Magenta
+hi String term=underline  ctermfg=DarkGreen
+hi Character term=underline ctermfg=LightGreen
+hi link Number  Constant
+hi link Boolean Constant
+hi link Float       Number
+
+hi Identifier term=underline    cterm=bold          ctermfg=Cyan
+hi Function term=bold       ctermfg=White
+
+hi Statement term=bold      ctermfg=Yellow
+hi Repeat   term=underline  ctermfg=White
+hi Operator             ctermfg=Red
+hi link Conditional Repeat
+hi link Label       Statement
+hi link Keyword Statement
+hi link Exception   Repeat
+
+hi PreProc  term=underline  ctermfg=LightRed
+hi link Include PreProc
+hi link Define  PreProc
+hi link Macro       PreProc
+hi link PreCondit   PreProc
+
+hi Type term=underline      ctermfg=Yellow
+hi link StorageClass    Type
+hi link Structure   Type
+hi link Typedef Type
+
+
+hi Special  term=bold       ctermfg=DarkMagenta
+hi SpecialComment term=bold ctermfg=DarkCyan
+hi link Tag     Special
+hi link SpecialChar Special
+hi link Delimiter   Special
+hi link Debug       Special
+
+hi Ignore               ctermfg=black
+
+hi Error    term=reverse ctermbg=Red ctermfg=White
+
+hi Todo term=standout ctermbg=Yellow ctermfg=Black
+
+hi Underlined cterm=underline ctermfg=White
+
+" tabs
+hi TabLineSel ctermfg=Green ctermbg=black
+hi TabLine ctermfg=Blue ctermbg=white
+
+if has("autocmd")
+	filetype plugin indent on
+	autocmd FileType text,xml,tex setlocal textwidth=78
+	autocmd FileType mail setlocal textwidth=72
+	autocmd FileType mail hi Comment ctermfg=DarkCyan
+	autocmd FileType mail hi PreProc ctermfg=Blue
+	autocmd FileType mail hi Type ctermfg=Green
+	autocmd BufReadPre *.xml setlocal fileencodings=utf-8,latin2
+	autocmd BufNewFile *.xml setlocal fileencoding=utf-8
+	autocmd BufReadPre mutt-*-* set filetype=mail
+	autocmd BufReadPost *
+		\ if line("'\"") > 0 && line("'\"") <= line("$") |
+		\   exe "normal g`\"" |
+		\ endif
+endif " has("autocmd")
+
+hi LineNr term=bold ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
+
+" Use pathogen to easily modify the runtime path to include all
+" plugins under the ~/.vim/bundle directory
+" call pathogen#helptags()
+" call pathogen#runtime_append_all_bundles()
+
+" change the mapleader from \ to ,
+let mapleader=","
+
+" Quickly edit/reload the vimrc file
+nmap <silent> <leader>ev :e $MYVIMRC<CR>
+nmap <silent> <leader>sv :so $MYVIMRC<CR>
+
+" It hides buffers instead of closing them.
+set hidden
+set ignorecase " ignore case when searching
+set smartcase     " ignore case if search pattern is all lowercase,
+                  "  case-sensitive otherwise
+set history=1000         " remember more commands and search history
+set undolevels=1000      " use many muchos levels of undo
+set visualbell           " don't beep
+set noerrorbells         " don't beep
+"set list
+"set listchars=tab:>.,trail:.,extends:#,nbsp:.
+nmap <silent> ,/ :nohlsearch<CR>
+
+"  Initialize: {{{1
+set nocp
+if version >= 600
+ filetype plugin indent on
+endif
+
+let mapleader=','
+vmap <Leader>q= :Tabularize /=<CR>
+nmap <Leader>q= :Tabularize /=<CR>
+nmap <Leader>q: :Tabularize /:\zs<CR>
+vmap <Leader>q: :Tabularize /:\zs<CR>
+
