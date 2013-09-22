@@ -1,117 +1,94 @@
-map <C-N><C-N> :set invnumber<CR>
-set nobackup
-set backspace=indent,eol,start
-set ruler
-set ai
-set showcmd
-set incsearch
-set title
-set autoread
+"	1. Place file in home directory as .vimrc
+"	2. Run the following command in terminal
+"		mkdir .vim .vim/bundle .vim/backup .vim/swap .vim/cache .vim/undo; git clone https://github.com/gmarik/vundle.git .vim/bundle/vundle
+"	3. Launch Vim and Run
+"		:BundleInstall
+"	5. Restart Vim
+set nocompatible
+filetype off
 
-set foldmethod=indent
-set nofoldenable
-
-set nomodeline
-
-syntax on
-set hlsearch
-
-set pastetoggle=<C-P>
-
-
-map Q gq
-map <C-K> :nohlsearch<CR>
-
-map! <C-E> <ESC>A
-
-" tabs
-map <C-P> :Project<CR>
-map <C-T> :tabnew<CR>
-map <S-RIGHT> <ESC>:tabn<CR>
-map <S-LEFT>  <ESC>:tabp<CR>
-
-
-" kolorki
-set background=dark
-
-hi clear
-if exists("syntax_on")
-	syntax reset
+if has("win32")
+    " We're on Windows.
+    let g:vim_home_path = "~/vimfiles"
+else
+    " We're on some POSIX system, hopefully.
+    let g:vim_home_path = "~/.vim"
 endif
 
-hi Comment term=bold ctermfg=Brown
+execute "set rtp+=" . g:vim_home_path . "/bundle/vundle/"
+let g:vundle_default_git_proto = 'https'
+call vundle#rc(g:vim_home_path. "/bundle")
 
-hi Constant term=underline  ctermfg=Magenta
-hi String term=underline  ctermfg=DarkGreen
-hi Character term=underline ctermfg=LightGreen
-hi link Number  Constant
-hi link Boolean Constant
-hi link Float       Number
+Bundle 'gmarik/vundle'
 
-hi Identifier term=underline    cterm=bold          ctermfg=Cyan
-hi Function term=bold       ctermfg=White
+" Language plugins
+Bundle "bryanjswift/vim-rust"
+Bundle "empanda/vim-varnish"
+Bundle "groenewege/vim-less"
+Bundle "Glench/Vim-Jinja2-Syntax"
+Bundle 'jnwhiteh/vim-golang'
+Bundle "kchmck/vim-coffee-script"
+Bundle "PProvost/vim-ps1"
+Bundle "rodjek/vim-puppet"
+Bundle "tpope/vim-markdown"
+Bundle "vim-scripts/VimClojure"
 
-hi Statement term=bold      ctermfg=Yellow
-hi Repeat   term=underline  ctermfg=White
-hi Operator             ctermfg=Red
-hi link Conditional Repeat
-hi link Label       Statement
-hi link Keyword Statement
-hi link Exception   Repeat
+" Other plugins
+Bundle "godlygeek/tabular"
+Bundle "kien/ctrlp.vim"
+Bundle "Lokaltog/vim-easymotion"
+Bundle "Lokaltog/vim-powerline"
+Bundle "mileszs/ack.vim"
+Bundle "scrooloose/syntastic"
+Bundle "tpope/vim-eunuch"
+Bundle "tpope/vim-fugitive"
+Bundle "msanders/snipmate.vim"
+Bundle "mhinz/vim-startify"
 
-hi PreProc  term=underline  ctermfg=LightRed
-hi link Include PreProc
-hi link Define  PreProc
-hi link Macro       PreProc
-hi link PreCondit   PreProc
+" ruby blocks
+Bundle "tsaleh/vim-matchit"
+Bundle "kana/vim-textobj-user"
+Bundle "nelstrom/vim-textobj-rubyblock"
 
-hi Type term=underline      ctermfg=Yellow
-hi link StorageClass    Type
-hi link Structure   Type
-hi link Typedef Type
+" tagbar
+Bundle "majutsushi/tagbar"
 
+" Personal bundles
+Bundle 'mitchellh/vim-misc'
 
-hi Special  term=bold       ctermfg=DarkMagenta
-hi SpecialComment term=bold ctermfg=DarkCyan
-hi link Tag     Special
-hi link SpecialChar Special
-hi link Delimiter   Special
-hi link Debug       Special
+" solarized
+Bundle "altercation/vim-colors-solarized"
 
-hi Ignore               ctermfg=black
+" NERDTree
+Bundle "scrooloose/nerdtree"
 
-hi Error    term=reverse ctermbg=Red ctermfg=White
+" Turn on filetype plugin and indent loading so that loading the
+" vim-misc stuff below loads the proper files.
+filetype plugin indent on
 
-hi Todo term=standout ctermbg=Yellow ctermfg=Black
+" Load in my custom vimrc if it exists
+if filereadable(expand(g:vim_home_path . "/bundle/vim-misc/vimrc.vim"))
+    execute "source " . g:vim_home_path . "/bundle/vim-misc/vimrc.vim"
+endif
 
-hi Underlined cterm=underline ctermfg=White
+" solarized options
+set background=dark
+let g:solarized_termcolors = 256
+let g:solarized_visibility = "high"
+let g:solarized_contrast = "high"
+colorscheme solarized
 
-" tabs
-hi TabLineSel ctermfg=Green ctermbg=black
-hi TabLine ctermfg=Blue ctermbg=white
+map <C-K> :nohlsearch<CR>
+map <C-N><C-N> :set invrelativenumber<CR>
 
+" remember previous cursos position
 if has("autocmd")
-	filetype plugin indent on
-	autocmd FileType text,xml,tex setlocal textwidth=78
-	autocmd FileType mail setlocal textwidth=72
-	autocmd FileType mail hi Comment ctermfg=DarkCyan
-	autocmd FileType mail hi PreProc ctermfg=Blue
-	autocmd FileType mail hi Type ctermfg=Green
-	autocmd BufReadPre *.xml setlocal fileencodings=utf-8,latin2
-	autocmd BufNewFile *.xml setlocal fileencoding=utf-8
-	autocmd BufReadPre mutt-*-* set filetype=mail
-	autocmd BufReadPost *
-		\ if line("'\"") > 0 && line("'\"") <= line("$") |
-		\   exe "normal g`\"" |
-		\ endif
+    filetype plugin indent on
+    autocmd BufReadPost *
+        \ if line("'\"") > 0 && line("'\"") <= line("$") |
+        \   exe "normal g`\"" |
+        \ endif
 endif " has("autocmd")
-
-hi LineNr term=bold ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
-
-" Use pathogen to easily modify the runtime path to include all
-" plugins under the ~/.vim/bundle directory
-" call pathogen#helptags()
-" call pathogen#runtime_append_all_bundles()
 
 " change the mapleader from \ to ,
 let mapleader=","
@@ -120,28 +97,28 @@ let mapleader=","
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
-" It hides buffers instead of closing them.
-set hidden
-set ignorecase " ignore case when searching
-set smartcase     " ignore case if search pattern is all lowercase,
-                  "  case-sensitive otherwise
-set history=1000         " remember more commands and search history
-set undolevels=1000      " use many muchos levels of undo
-set visualbell           " don't beep
-set noerrorbells         " don't beep
-"set list
-"set listchars=tab:>.,trail:.,extends:#,nbsp:.
-nmap <silent> ,/ :nohlsearch<CR>
+" NERDTree
+nmap <silent> <leader>p :NERDTreeToggle<CR>
+nmap <silent> <leader>q :NERDTreeClose<CR>
 
-"  Initialize: {{{1
-set nocp
-if version >= 600
- filetype plugin indent on
-endif
+" tagbar
+nmap <silent> <leader>l :TagbarToggle<CR>
 
-let mapleader=','
-vmap <Leader>q= :Tabularize /=<CR>
-nmap <Leader>q= :Tabularize /=<CR>
-nmap <Leader>q: :Tabularize /:\zs<CR>
-vmap <Leader>q: :Tabularize /:\zs<CR>
+" Close vim when only oppened window is NERDTree.
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+let g:NERDTreeWinPos = "right"
+let g:tagbar_ctags_bin = "/usr/local/Cellar/ctags/5.8/bin/ctags"
+let g:startify_list_order = ['files', 'sessions', 'bookmarks']
+let g:startify_change_to_dir = 1
+let g:startify_custom_header = [
+                \ '   __      ___            ______ ____   ',
+                \ '   \ \    / (_)           |____  |___ \ ',
+                \ '    \ \  / / _ _ __ ___       / /  __) |',
+                \ '     \ \/ / | | ''_ ` _ \     / /  |__ <',
+                \ '      \  /  | | | | | | |   / /   ___) |',
+                \ '       \/   |_|_| |_| |_|  /_(_) |____/ ',
+                \ '',
+                \ '',
+                \ ]
 
+set guifont=Monaco:h13
