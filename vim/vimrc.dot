@@ -62,6 +62,15 @@ Bundle "altercation/vim-colors-solarized"
 " NERDTree
 Bundle "scrooloose/nerdtree"
 
+Bundle "kevinw/pyflakes-vim"
+
+" RSpec
+Bundle 'thoughtbot/vim-rspec'
+Bundle 'jgdavey/tslime.vim'
+Bundle 'tpope/vim-dispatch'
+
+
+
 " Turn on filetype plugin and indent loading so that loading the
 " vim-misc stuff below loads the proper files.
 filetype plugin indent on
@@ -71,15 +80,17 @@ if filereadable(expand(g:vim_home_path . "/bundle/vim-misc/vimrc.vim"))
     execute "source " . g:vim_home_path . "/bundle/vim-misc/vimrc.vim"
 endif
 
+set t_Co=256
 " solarized options
 set background=dark
 let g:solarized_termcolors = 256
-let g:solarized_visibility = "high"
-let g:solarized_contrast = "high"
+"let g:solarized_visibility = "high"
+"let g:solarized_contrast = "high"
 colorscheme solarized
+"colorscheme molokai
 
 map <C-K> :nohlsearch<CR>
-map <C-N><C-N> :set invrelativenumber<CR>
+map <C-N><C-N> :set invnumber<CR>
 
 " remember previous cursos position
 if has("autocmd")
@@ -92,6 +103,15 @@ endif " has("autocmd")
 
 " change the mapleader from \ to ,
 let mapleader=","
+
+" RSpec.vim mappings
+"let g:rspec_command = 'call Send_to_Tmux("rspec {spec}\n")'
+let g:rspec_command = "Dispatch rspec {spec}"
+
+map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+map <Leader>a :call RunAllSpecs()<CR>
 
 " Quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
@@ -108,17 +128,25 @@ nmap <silent> <leader>l :TagbarToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 let g:NERDTreeWinPos = "right"
 let g:tagbar_ctags_bin = "/usr/local/Cellar/ctags/5.8/bin/ctags"
-let g:startify_list_order = ['files', 'sessions', 'bookmarks']
-let g:startify_change_to_dir = 1
-let g:startify_custom_header = [
-                \ '   __      ___            ______ ____   ',
-                \ '   \ \    / (_)           |____  |___ \ ',
-                \ '    \ \  / / _ _ __ ___       / /  __) |',
-                \ '     \ \/ / | | ''_ ` _ \     / /  |__ <',
-                \ '      \  /  | | | | | | |   / /   ___) |',
-                \ '       \/   |_|_| |_| |_|  /_(_) |____/ ',
-                \ '',
-                \ '',
-                \ ]
+"set guifont=Monaco:h13
 
-set guifont=Monaco:h13
+"set relativenumber
+
+
+" Startify
+let g:startify_list_order = ['bookmarks', 'files', 'sessions']
+let g:startify_bookmarks = [
+    \ '~/Devel/python/blip',
+    \ ]
+let g:startify_custom_header = [
+    \ '                              _            _  ',
+    \ '                             | |          | | ',
+    \ '                  _____ _   _| | _____  __| | ',
+    \ '                 (___  ) | | | |(____ |/ _  | ',
+    \ '                  / __/| |_| | |/ ___ ( (_| | ',
+    \ '                 (_____)\__  |\_)_____|\____| ',
+    \ '                       (____/ ',
+    \ '      ======================================================',
+    \ '',
+    \ ]
+
