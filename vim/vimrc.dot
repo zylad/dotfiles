@@ -69,6 +69,11 @@ Bundle 'thoughtbot/vim-rspec'
 Bundle 'jgdavey/tslime.vim'
 Bundle 'tpope/vim-dispatch'
 
+Bundle 'klen/python-mode'
+Bundle 'kien/rainbow_parentheses.vim'
+
+Bundle 'tpope/vim-unimpaired'
+
 
 
 " Turn on filetype plugin and indent loading so that loading the
@@ -86,8 +91,8 @@ set background=dark
 let g:solarized_termcolors = 256
 "let g:solarized_visibility = "high"
 "let g:solarized_contrast = "high"
-colorscheme solarized
-"colorscheme molokai
+"colorscheme solarized
+colorscheme molokai
 
 map <C-K> :nohlsearch<CR>
 map <C-N><C-N> :set invnumber<CR>
@@ -150,3 +155,53 @@ let g:startify_custom_header = [
     \ '',
     \ ]
 
+
+let g:pymode_rope = 1
+
+" Documentation
+let g:pymode_doc = 1
+let g:pymode_doc_key = 'K'
+
+"Linting
+let g:pymode_lint = 1
+let g:pymode_lint_checker = "pyflakes,pep8"
+" Auto check on save
+let g:pymode_lint_write = 1
+
+" Support virtualenv
+let g:pymode_virtualenv = 1
+
+" syntax highlighting
+let g:pymode_syntax = 1
+let g:pymode_syntax_all = 1
+let g:pymode_syntax_indent_errors = g:pymode_syntax_all
+let g:pymode_syntax_space_errors = g:pymode_syntax_all
+
+
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['black',       'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
+
+" rainbow parentheses always on
+au VimEnter * RainbowParenthesesActivate
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+
+" for email:  unfold and delete to your signature
+noremap ,dd zi:.;/^-- $/d<CR>O-- <UP><End><CR><CR><UP><CR><C-O>zi
