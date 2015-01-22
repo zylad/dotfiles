@@ -26,7 +26,7 @@ Bundle "bryanjswift/vim-rust"
 Bundle "empanda/vim-varnish"
 Bundle "groenewege/vim-less"
 Bundle "Glench/Vim-Jinja2-Syntax"
-Bundle 'jnwhiteh/vim-golang'
+Bundle "fatih/vim-go"
 Bundle "kchmck/vim-coffee-script"
 Bundle "PProvost/vim-ps1"
 Bundle "rodjek/vim-puppet"
@@ -37,7 +37,9 @@ Bundle "vim-scripts/VimClojure"
 Bundle "godlygeek/tabular"
 Bundle "kien/ctrlp.vim"
 Bundle "Lokaltog/vim-easymotion"
-Bundle "Lokaltog/vim-powerline"
+"Bundle "Lokaltog/vim-powerline"
+"Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Bundle 'bling/vim-airline'
 Bundle "mileszs/ack.vim"
 Bundle "scrooloose/syntastic"
 Bundle "tpope/vim-eunuch"
@@ -73,7 +75,7 @@ Bundle 'klen/python-mode'
 Bundle 'kien/rainbow_parentheses.vim'
 
 Bundle 'tpope/vim-unimpaired'
-
+"Bundle 'vim-scripts/TabBar'
 
 
 " Turn on filetype plugin and indent loading so that loading the
@@ -87,8 +89,8 @@ endif
 
 set t_Co=256
 " solarized options
-set background=dark
-let g:solarized_termcolors = 256
+"set background=dark
+"let g:solarized_termcolors = 256
 "let g:solarized_visibility = "high"
 "let g:solarized_contrast = "high"
 "colorscheme solarized
@@ -113,6 +115,7 @@ let mapleader=","
 "let g:rspec_command = 'call Send_to_Tmux("rspec {spec}\n")'
 let g:rspec_command = "Dispatch rspec {spec}"
 
+let mapleader=","
 map <Leader>t :call RunCurrentSpecFile()<CR>
 map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>l :call RunLastSpec()<CR>
@@ -129,13 +132,19 @@ nmap <silent> <leader>q :NERDTreeClose<CR>
 " tagbar
 nmap <silent> <leader>l :TagbarToggle<CR>
 
+map <C-t><up> :tabr<cr>
+map <C-t><down> :tabl<cr>
+map <C-t><left> :tabp<cr>
+map <C-t><right> :tabn<cr>
+
+
 " Close vim when only oppened window is NERDTree.
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 let g:NERDTreeWinPos = "right"
 let g:tagbar_ctags_bin = "/usr/local/Cellar/ctags/5.8/bin/ctags"
 "set guifont=Monaco:h13
 
-"set relativenumber
+set number
 
 
 " Startify
@@ -156,11 +165,13 @@ let g:startify_custom_header = [
     \ ]
 
 
-let g:pymode_rope = 1
+let g:pymode_rope = 0
 
 " Documentation
 let g:pymode_doc = 1
 let g:pymode_doc_key = 'K'
+
+set  completeopt=menu
 
 "Linting
 let g:pymode_lint = 1
@@ -205,3 +216,36 @@ au Syntax * RainbowParenthesesLoadBraces
 
 " for email:  unfold and delete to your signature
 noremap ,dd zi:.;/^-- $/d<CR>O-- <UP><End><CR><CR><UP><CR><C-O>zi
+
+au FileType go nmap <Leader>i <Plug>(go-info)
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+au FileType go nmap gd <Plug>(go-def)
+
+map <Leader><Leader>c :!/usr/local/bin/ctags -R -f ./tags .  `python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()" `<CR>
+set tags+=tags;
+
+let g:go_fmt_autosave = 0
+
+set iskeyword=-,:,@,48-57,_,192-255
+set norelativenumber
+
+"python from powerline.vim import setup as powerline_setup
+"python powerline_setup()
+"python del powerline_setup
+
+set t_Co=256
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts=1
+
+let g:Powerline_symbols = 'fancy'
+
+set guifont=Inconsolata-dz\ for\ Powerline:h10
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+
+au FileType go nmap <Leader>ds <Plug>(go-def-split)
+au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+
