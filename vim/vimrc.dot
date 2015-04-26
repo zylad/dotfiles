@@ -22,6 +22,7 @@ call vundle#rc(g:vim_home_path. "/bundle")
 Bundle 'gmarik/vundle'
 
 " Language plugins
+Bundle "vim-ruby/vim-ruby"
 Bundle "bryanjswift/vim-rust"
 Bundle "empanda/vim-varnish"
 Bundle "groenewege/vim-less"
@@ -40,11 +41,12 @@ Bundle "Lokaltog/vim-easymotion"
 "Bundle "Lokaltog/vim-powerline"
 "Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 Bundle 'bling/vim-airline'
-Bundle "mileszs/ack.vim"
+"Bundle "mileszs/ack.vim"
+Bundle "rking/ag.vim"
 Bundle "scrooloose/syntastic"
 Bundle "tpope/vim-eunuch"
 Bundle "tpope/vim-fugitive"
-Bundle "msanders/snipmate.vim"
+"Bundle "msanders/snipmate.vim"
 Bundle "mhinz/vim-startify"
 
 " ruby blocks
@@ -75,7 +77,17 @@ Bundle 'klen/python-mode'
 Bundle 'kien/rainbow_parentheses.vim'
 
 Bundle 'tpope/vim-unimpaired'
+Bundle 'Shutnik/jshint2.vim'
 "Bundle 'vim-scripts/TabBar'
+Bundle 'SirVer/ultisnips'
+Bundle 'honza/vim-snippets'
+Bundle 'Shougo/neocomplete.vim'
+Bundle 'Shougo/neosnippet.vim'
+Bundle 'ervandew/supertab'
+Bundle 'sjl/vitality.vim'
+Plugin 'nsf/gocode', {'rtp': 'vim/'}
+"Bundle 'davidhalter/jedi-vim'
+Bundle "markcornick/vim-terraform"
 
 
 " Turn on filetype plugin and indent loading so that loading the
@@ -91,7 +103,7 @@ set t_Co=256
 " solarized options
 "set background=dark
 "let g:solarized_termcolors = 256
-"let g:solarized_visibility = "high"
+"let g:solarized_visibility = "medium"
 "let g:solarized_contrast = "high"
 "colorscheme solarized
 colorscheme molokai
@@ -103,9 +115,9 @@ map <C-N><C-N> :set invnumber<CR>
 if has("autocmd")
     filetype plugin indent on
     autocmd BufReadPost *
-        \ if line("'\"") > 0 && line("'\"") <= line("$") |
-        \   exe "normal g`\"" |
-        \ endif
+                \ if line("'\"") > 0 && line("'\"") <= line("$") |
+                \   exe "normal g`\"" |
+                \ endif
 endif " has("autocmd")
 
 " change the mapleader from \ to ,
@@ -115,11 +127,11 @@ let mapleader=","
 "let g:rspec_command = 'call Send_to_Tmux("rspec {spec}\n")'
 let g:rspec_command = "Dispatch rspec {spec}"
 
-let mapleader=","
-map <Leader>t :call RunCurrentSpecFile()<CR>
-map <Leader>s :call RunNearestSpec()<CR>
-map <Leader>l :call RunLastSpec()<CR>
-map <Leader>a :call RunAllSpecs()<CR>
+"let mapleader=","
+"map <Leader>t :call RunCurrentSpecFile()<CR>
+"map <Leader>s :call RunNearestSpec()<CR>
+"map <Leader>l :call RunLastSpec()<CR>
+"map <Leader>a :call RunAllSpecs()<CR>
 
 " Quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
@@ -149,29 +161,32 @@ set number
 
 " Startify
 let g:startify_list_order = ['bookmarks', 'files', 'sessions']
-let g:startify_bookmarks = [
-    \ '~/Devel/python/blip',
-    \ ]
+"let g:startify_bookmarks = [
+"            \ '~/Devel/python/blip',
+"            \ ]
 let g:startify_custom_header = [
-    \ '                              _            _  ',
-    \ '                             | |          | | ',
-    \ '                  _____ _   _| | _____  __| | ',
-    \ '                 (___  ) | | | |(____ |/ _  | ',
-    \ '                  / __/| |_| | |/ ___ ( (_| | ',
-    \ '                 (_____)\__  |\_)_____|\____| ',
-    \ '                       (____/ ',
-    \ '      ======================================================',
-    \ '',
-    \ ]
+            \ '                              _            _  ',
+            \ '                             | |          | | ',
+            \ '                  _____ _   _| | _____  __| | ',
+            \ '                 (___  ) | | | |(____ |/ _  | ',
+            \ '                  / __/| |_| | |/ ___ ( (_| | ',
+            \ '                 (_____)\__  |\_)_____|\____| ',
+            \ '                       (____/ ',
+            \ '      ======================================================',
+            \ '',
+            \ ]
 
 
-let g:pymode_rope = 0
+let g:pymode_rope = 1
+let g:pymode_rope_goto_definition_cmd = 'vnew'
 
 " Documentation
 let g:pymode_doc = 1
 let g:pymode_doc_key = 'K'
 
-set  completeopt=menu
+"doc window in python-mode: https://github.com/klen/python-mode/issues/384
+"set  completeopt=menu,preview
+set completeopt=menu
 
 "Linting
 let g:pymode_lint = 1
@@ -190,23 +205,23 @@ let g:pymode_syntax_space_errors = g:pymode_syntax_all
 
 
 let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
-    \ ['darkgray',    'DarkOrchid3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkred',     'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['brown',       'firebrick3'],
-    \ ['gray',        'RoyalBlue3'],
-    \ ['black',       'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
-    \ ['darkgreen',   'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ['red',         'firebrick3'],
-    \ ]
+            \ ['brown',       'RoyalBlue3'],
+            \ ['Darkblue',    'SeaGreen3'],
+            \ ['darkgray',    'DarkOrchid3'],
+            \ ['darkgreen',   'firebrick3'],
+            \ ['darkcyan',    'RoyalBlue3'],
+            \ ['darkred',     'SeaGreen3'],
+            \ ['darkmagenta', 'DarkOrchid3'],
+            \ ['brown',       'firebrick3'],
+            \ ['gray',        'RoyalBlue3'],
+            \ ['black',       'SeaGreen3'],
+            \ ['darkmagenta', 'DarkOrchid3'],
+            \ ['Darkblue',    'firebrick3'],
+            \ ['darkgreen',   'RoyalBlue3'],
+            \ ['darkcyan',    'SeaGreen3'],
+            \ ['darkred',     'DarkOrchid3'],
+            \ ['red',         'firebrick3'],
+            \ ]
 
 " rainbow parentheses always on
 au VimEnter * RainbowParenthesesActivate
@@ -237,10 +252,15 @@ set norelativenumber
 set t_Co=256
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts=1
+let g:airline_theme="bubblegum"
 
 let g:Powerline_symbols = 'fancy'
 
 set guifont=Inconsolata-dz\ for\ Powerline:h10
+
+" vim-go
+au FileType go nmap <Leader>s <Plug>(go-implements)
+au FileType go nmap <Leader>i <Plug>(go-info)
 au FileType go nmap <Leader>gd <Plug>(go-doc)
 au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
 au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
@@ -248,4 +268,55 @@ au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
 au FileType go nmap <Leader>ds <Plug>(go-def-split)
 au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
 au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+au FileType go nmap <C-]> <Plug>(go-def)
 
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage)
+
+
+au FileType go nmap <silent><Leader>L :GoLint<CR>
+au FileType go nmap <silent><Leader>v :GoVet<CR>
+
+
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+let g:neocomplete#enable_at_startup = 1
+let g:neosnippet#enable_snipmate_compatibility = 1
+let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
+
+" make YCM compatible with UltiSnips (using supertab)
+"let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+"let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+"let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
+autocmd FileType python setlocal completeopt-=preview
+
+let g:pymode_rope_goto_definition_bind = "<C-]>"
+
+autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+
+map <leader>I gg=G''
+
+" cursor line slows down vim A LOT
+set nocursorline
+" same as centered cursor
+set scrolloff=0
