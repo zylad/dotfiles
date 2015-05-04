@@ -83,6 +83,7 @@ Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
 Bundle 'Shougo/neocomplete.vim'
 Bundle 'Shougo/neosnippet.vim'
+Bundle 'Shougo/neosnippet-snippets'
 Bundle 'ervandew/supertab'
 Bundle 'sjl/vitality.vim'
 Plugin 'nsf/gocode', {'rtp': 'vim/'}
@@ -309,6 +310,21 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 autocmd FileType python setlocal completeopt-=preview
 
 let g:pymode_rope_goto_definition_bind = "<C-]>"
+
+"let g:neocomplete#enable_at_startup = 1
+"let g:neocomplete#enable_fuzzy_completion = 1
+"let g:neocomplete_enable_fuzzy_completion_start_length = 2
+"let g:neocomplete_enable_camel_case_completion = 0
+"let g:neocomplete#enable_smart_case = 1
+"let g:neocomplete#enable_auto_delimiter = 1
+"let g:neocomplete#max_list = 10
+"let g:neocomplete#force_overwrite_completefunc = 1
+"let g:neocomplete#enable_auto_select = 0
+"
+if !exists('g:neocomplete#force_omni_input_patterns')
+  let g:neocomplete#force_omni_input_patterns = {}
+endif
+let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
 
 autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
