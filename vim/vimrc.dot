@@ -63,6 +63,8 @@ Bundle 'mitchellh/vim-misc'
 " solarized
 Bundle "altercation/vim-colors-solarized"
 
+Bundle "barn/Pychimp-vim"
+
 " NERDTree
 Bundle "scrooloose/nerdtree"
 
@@ -90,6 +92,10 @@ Plugin 'nsf/gocode', {'rtp': 'vim/'}
 "Bundle 'davidhalter/jedi-vim'
 Bundle "markcornick/vim-terraform"
 
+"run shell in vim
+Bundle 'lrvick/Conque-Shell'
+
+Bundle 'morhetz/gruvbox'
 
 " Turn on filetype plugin and indent loading so that loading the
 " vim-misc stuff below loads the proper files.
@@ -105,9 +111,13 @@ set t_Co=256
 "set background=dark
 "let g:solarized_termcolors = 256
 "let g:solarized_visibility = "medium"
-"let g:solarized_contrast = "high"
+"let g:solarized_contrast = "hard"
+set background=light
+
+"set background=dark
 "colorscheme solarized
-colorscheme molokai
+"colorscheme molokai
+colorscheme gruvbox
 
 map <C-K> :nohlsearch<CR>
 map <C-N><C-N> :set invnumber<CR>
@@ -253,7 +263,8 @@ set norelativenumber
 set t_Co=256
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts=1
-let g:airline_theme="bubblegum"
+"let g:airline_theme="bubblegum"
+let g:airline_theme="gruvbox"
 
 let g:Powerline_symbols = 'fancy'
 
@@ -293,7 +304,37 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
+"neocomplete
+"let g:acp_enableAtStartup = 0
+" Use neocomplete.
 let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+"let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+"let g:neocomplete#sources#syntax#min_keyword_length = 3
+"let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+" Plugin key-mappings.
+"inoremap <expr><C-g>     neocomplete#undo_completion()
+"inoremap <expr><C-l>     neocomplete#complete_common_string()
+"
+"" Recommended key-mappings.
+"" <CR>: close popup and save indent.
+"inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+"function! s:my_cr_function()
+"  return neocomplete#close_popup() . "\<CR>"
+"  " For no inserting <CR> key.
+"  "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+"endfunction
+"" <TAB>: completion.
+"inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+"" <C-h>, <BS>: close popup and delete backword char.
+"inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+"inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+"inoremap <expr><C-y>  neocomplete#close_popup()
+"inoremap <expr><C-e>  neocomplete#cancel_popup()
+
+
 let g:neosnippet#enable_snipmate_compatibility = 1
 let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
 
@@ -324,15 +365,21 @@ let g:pymode_rope_goto_definition_bind = "<C-]>"
 if !exists('g:neocomplete#force_omni_input_patterns')
   let g:neocomplete#force_omni_input_patterns = {}
 endif
-let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
 
+"autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+
+let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
+"
+"autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+"autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+"autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 
 map <leader>I gg=G''
 
 " cursor line slows down vim A LOT
 set nocursorline
 " same as centered cursor
-set scrolloff=0
+set scrolloff=5
