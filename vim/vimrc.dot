@@ -112,9 +112,9 @@ set t_Co=256
 "let g:solarized_termcolors = 256
 "let g:solarized_visibility = "medium"
 "let g:solarized_contrast = "hard"
-set background=light
+"set background=light
 
-"set background=dark
+set background=dark
 "colorscheme solarized
 "colorscheme molokai
 colorscheme gruvbox
