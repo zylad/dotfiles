@@ -21,6 +21,8 @@ call vundle#rc(g:vim_home_path. "/bundle")
 
 Bundle 'gmarik/vundle'
 
+Plugin 'sourcegraph/sourcegraph-vim'
+
 " Language plugins
 Bundle "vim-ruby/vim-ruby"
 Bundle "bryanjswift/vim-rust"
@@ -383,3 +385,7 @@ map <leader>I gg=G''
 set nocursorline
 " same as centered cursor
 set scrolloff=5
+
+let g:SOURCEGRAPH_AUTO = "false"
+let g:SOURCEGRAPH_GOPATH = "/Users/dominikzyla/projects/go"
+let g:SOURCEGRAPH_GOBIN = "/usr/local/bin/go"
